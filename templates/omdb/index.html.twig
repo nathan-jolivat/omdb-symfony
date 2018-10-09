@@ -12,7 +12,7 @@
         </nav>
         <form action="{{ path('find') }}" method="get">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Nom du film</span>
@@ -20,13 +20,32 @@
                         <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <button class="btn btn-primary" type="submit">Récupérer informations</button>
                 </div>
             </div>
         </form>
         {% if responseMovie is defined %}
-            {{ dump(responseMovie) }}
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="card-img-top" src="{{ responseMovie.Poster }}" alt="Card image cap">
+                    </div>
+                    <div class="col-md-8">
+                        <h1 class="display-4">{{ responseMovie.Title }} - <i>{{ responseMovie.Year }}</i></h1>
+                        <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
+                        <hr class="my-4">
+                        <p>Synopsis : <i>{{ responseMovie.Plot }}</i><br>
+                            <a href="{{ responseMovie.Website }}">
+                                {{ responseMovie.Website }}
+                            </a>
+                        </p>
+                        <p class="lead">
+                            <span class="badge badge-primary">{{ responseMovie.Genre }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
