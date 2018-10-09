@@ -31,13 +31,14 @@
                     <div class="row">
                         <div class="col-md-4">
                             {% if responseMovie.Poster is defined %}
-                                <img class="card-img-top" src="{{ responseMovie.Poster }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{ responseMovie.Poster }}" alt="Poster du film">
                             {% else %}
                                 <h5>Pas d'image disponible</h5>
                             {% endif %}
                         </div>
                         <div class="col-md-8">
                             <h1 class="display-4">{{ responseMovie.Title }} - <i>{{ responseMovie.Year }}</i></h1>
+                            <span>Date de sortie <i class="mdi mdi-arrow-right"></i> {{ responseMovie.Released }}</span>
                             <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
                             <hr class="my-4">
                             <p>
