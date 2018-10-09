@@ -26,6 +26,7 @@
                 </div>
             </div>
         </form>
+        <h4><i class="mdi mdi-arrow-right"></i> Résultat(s) pour : "{{ requestedTitle }}"</h4>
             {% if responseMovie is defined %}
                 {% for searchItem in responseMovie.Search %}
                     {% if searchItem is defined %}

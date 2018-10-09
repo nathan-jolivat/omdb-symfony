@@ -70,7 +70,8 @@ class ProductController extends AbstractController
 
         return $this->render('omdb/multiple.html.twig', [
             'responseMovie' => $response,
-            'omdbApiKey'    => $omdbApiKey
+            'omdbApiKey'    => $omdbApiKey,
+            'requestedTitle' => $requestedTitle
         ]);
     }
 
