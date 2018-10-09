@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+
+        {% include('product/assets/stylesheets.html.twig') %}
+    </head>
+    <body>
+        {% block content %}
+
+        {% endblock %}
+
+        {% include('product/assets/javascripts.html.twig') %}
+    </body>
+</html>
