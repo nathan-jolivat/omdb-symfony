@@ -26,26 +26,42 @@
             </div>
         </form>
         {% if responseMovie is defined %}
-            <div class="jumbotron">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img class="card-img-top" src="{{ responseMovie.Poster }}" alt="Card image cap">
-                    </div>
-                    <div class="col-md-8">
-                        <h1 class="display-4">{{ responseMovie.Title }} - <i>{{ responseMovie.Year }}</i></h1>
-                        <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
-                        <hr class="my-4">
-                        <p>Synopsis : <i>{{ responseMovie.Plot }}</i><br>
-                            <a href="{{ responseMovie.Website }}">
-                                {{ responseMovie.Website }}
-                            </a>
-                        </p>
-                        <p class="lead">
-                            <span class="badge badge-primary">{{ responseMovie.Genre }}</span>
-                        </p>
+            {% if responseMovie.Title is defined %}
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-4">
+                            {% if responseMovie.Poster is defined %}
+                                <img class="card-img-top" src="{{ responseMovie.Poster }}" alt="Card image cap">
+                            {% else %}
+                                <h5>Pas d'image disponible</h5>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h1 class="display-4">{{ responseMovie.Title }} - <i>{{ responseMovie.Year }}</i></h1>
+                            <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
+                            <hr class="my-4">
+                            <p>
+                                Synopsis : <i>{{ responseMovie.Plot }}</i><br>
+                                {% if responseMovie.Website is defined %}
+                                    <a href="{{ responseMovie.Website }}">
+                                        {{ responseMovie.Website }}
+                                    </a>
+                                {% endif %}
+                            </p>
+                            <p class="lead">
+                                <span class="badge badge-primary">{{ responseMovie.Genre }}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% else %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="mdi mdi-cloud-alert"></i><strong> Une erreur est survenue</strong> <i class="mdi mdi-arrow-right"></i> Aucun film de ce nom là n'existe m'sieur.
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}
