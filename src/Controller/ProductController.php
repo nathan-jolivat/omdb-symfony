@@ -12,6 +12,8 @@ class ProductController extends AbstractController
      */
     public function index()
     {
+        getenv('OMDB_API_KEY');
+        
         return $this->render('product/index.html.twig');
     }
 }
