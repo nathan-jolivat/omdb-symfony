@@ -16,7 +16,7 @@
                 <div class="col-md-9">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="mdi mdi-movie"></i> Nom du film</span>
+                            <span class="input-group-text"><i class="mdi mdi-video-vintage"></i> &nbsp;Nom du film</span>
                         </div>
                         <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher">
                     </div>
@@ -32,14 +32,14 @@
                     <div class="row">
                         <div class="col-md-4">
                             {% if responseMovie.Poster is defined %}
-                                <img class="card-img-top" src="{{ responseMovie.Poster }}" alt="Poster du film">
+                                <img class="card-img-top img-box-shadow" src="{{ responseMovie.Poster }}" alt="Poster du film">
                             {% else %}
                                 <h5>Pas d'image disponible</h5>
                             {% endif %}
                         </div>
                         <div class="col-md-8">
                             <h1 class="display-4">{{ responseMovie.Title }} - <i>{{ responseMovie.Year }}</i></h1>
-                            <span>Date de sortie <i class="mdi mdi-arrow-right"></i> {{ responseMovie.Released }}</span>
+                            <span><i class="mdi mdi-calendar-clock"></i> Date de sortie <i class="mdi mdi-arrow-right"></i> {{ responseMovie.Released }}</span>
                             <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
                             <hr class="my-4">
                             <h4><i class="mdi mdi-text-subject"></i> Synopsis</h4>
@@ -53,7 +53,7 @@
                                 {% endif %}
                             </p>
                             <p class="lead">
-                                <span class="badge badge-primary">{{ responseMovie.Genre }}</span>
+                                <span class="badge badge-primary"><i class="mdi mdi-tag-multiple"></i> {{ responseMovie.Genre }}</span>
                             </p>
                         </div>
                     </div>
