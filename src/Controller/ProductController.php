@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
+     * Redirect to multiple view if there are no GET parameters
+     *
      * @Route("/specific", name="specific")
      */
     public function specific()
@@ -17,6 +19,8 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Show details of a specific movie
+     *
      * @Route("/find-specific/{title}", name="find-specific")
      * @param $title
      *
@@ -39,6 +43,8 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Multiple items search view without GET parameters
+     *
      * @Route("/multiple", name="multiple")
      */
     public function multiple()
@@ -49,6 +55,8 @@ class ProductController extends AbstractController
     }
 
     /**
+     * Find by key word movies result
+     *
      * @Route("/find-multiple", name="find-multiple")
      * @param Request $request
      *
@@ -73,6 +81,11 @@ class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * Gives OMDB API Key to Navbar view
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function givesApiKeyToView()
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
