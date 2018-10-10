@@ -97,7 +97,7 @@ class OMDBController extends AbstractController
      */
     public function shareMovie(Request $request, Swift_Mailer $mailer)
     {
-        $recipient = $request->request->get('emailRecipient');
+        $recipient = $request->request->get('nameRecipient');
 
         $movieDetails = [
             'Title'    => $request->request->get('movieTitle'),
@@ -112,7 +112,7 @@ class OMDBController extends AbstractController
 
         $message = (new \Swift_Message("Partage d'un film"))
             ->setFrom('send@example.com')
-            ->setTo('recipient@example.com')
+            ->setTo($request->request->get('emailRecipient'))
             ->setBody($this->renderView(
                 'emails/template.html.twig',
                 [
@@ -125,7 +125,29 @@ class OMDBController extends AbstractController
 
         $mailer->send($message);
 
-        return $this->render("emails/mail-sended.html.twig");
+        return $this->forward('App\Controller\OMDBController::GetMailSentView',
+            [
+                'movieTitle' => $request->request->get('movieTitle')
+            ]
+        );
+    }
+
+    /**
+     * Get success view when share mail is sent
+     *
+     * @Route("/mail-sent", name="mail-sent")
+     * @param $movieTitle
+     *
+     * @return Response
+     */
+    public function getMailSentView($movieTitle)
+    {
+        $omdbApiKey = getenv('OMDB_API_KEY');
+
+        return $this->render('omdb/mail-sent.html.twig', [
+            'omdbApiKey' => $omdbApiKey,
+            'movieTitle' => $movieTitle
+        ]);
     }
 
     /**

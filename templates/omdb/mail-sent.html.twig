@@ -1,0 +1,32 @@
+{% extends 'omdb/layout/base.html.twig' %}
+
+{% block title %}Fiche film partagée avec succès{% endblock %}
+
+{% block content %}
+    {% include('omdb/layout/navbar.html.twig') %}
+    <div class="container" style="margin-top: 30px">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="mdi mdi-home"></i> Accueil > Fiche film > <b>Fiche film partagée avec succès</b></li>
+            </ol>
+        </nav>
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img width="80%" src="{{ asset('assets/img/mail-successfully-sent.png') }}" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <h1 class="display-4">C'est fait ! </h1>
+                        <h5><i>Fiche partagée avec succès</i></h5>
+                        <hr class="my-4">
+                        <a href="{{ path('find-specific', { 'title' : movieTitle }) }}">
+                            <button type="button" class="btn btn-info margin-top-30px" data-toggle="modal" data-target="#shareModal">
+                                <i class="mdi mdi-arrow-left"></i> Revenir à la fiche du Film
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
