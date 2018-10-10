@@ -13,9 +13,7 @@ class ProductController extends AbstractController
      */
     public function specific()
     {
-        $omdbApiKey = getenv('OMDB_API_KEY');
-
-        return $this->render('omdb/specific.html.twig', ['omdbApiKey' => $omdbApiKey]);
+        return $this->redirectToRoute('multiple');
     }
 
     /**
