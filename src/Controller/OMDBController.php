@@ -110,7 +110,7 @@ class OMDBController extends AbstractController
             'Genre'    => $request->request->get('movieGenre')
         ];
 
-        $message = (new \Swift_Message('Hello Email'))
+        $message = (new \Swift_Message("Partage d'un film"))
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody($this->renderView(
