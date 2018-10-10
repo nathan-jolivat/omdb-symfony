@@ -14,8 +14,7 @@
 
         <!-- Search Form by title keywords -->
         <form action="{{ path('find-multiple') }}" method="get">
-            <div class="row">
-                <div class="col-md-9">
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -23,20 +22,23 @@
                             </span>
                         </div>
                         <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher" autofocus>
+                        <div class="input-group-append" id="button-addon4">
+                            <button class="btn btn-primary" type="submit"><i class="mdi mdi-target"></i> Récupérer informations</button>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-target"></i> Récupérer informations</button>
-                </div>
-            </div>
         </form>
 
         <!-- Search form for IMDB ID -->
-        <form action="" method="get">
-            <input type="text" class="form-control" name="movieImdbID" placeholder="Saisir la référence IMDB du film" >
-            <button><i class="mdi mdi-dog"></i> Va chercher !</button>
-
-
+        <form action="{" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="mdi mdi-database-search"></i> Réf. IMDB </span>
+                </div>
+                <input type="text" class="form-control" name="movieImdbID" placeholder="Saisir la référence IMDB du film" >
+                <div class="input-group-append" id="button-addon4">
+                    <button class="btn btn-warning" type="submit" ><i class="mdi mdi-dog"></i> Va chercher !</button>
+                </div>
+            </div>
         </form>
 
         {% if requestedTitle is defined %}
@@ -58,7 +60,11 @@
                                             <span class="badge badge-pill badge-success"><i class="mdi mdi-video-vintage"></i> Film</span>
                                         {% endif %}
                                     </p>
-                                    <a href="{{ path('find-specific', { 'title' : searchItem.Title }) }}"><button class="btn btn-primary">En savoir plus</button></a>
+                                    <a href="{{ path('find-specific', { 'title' : searchItem.Title }) }}">
+                                        <button class="btn btn-primary">En savoir plus</button></a>
+                                    <a href="{{ path('find-specific-id',
+                                        { 'imdbId' : searchItem.imdbID }) }}">
+                                        <button class="btn btn-light">Ref. IMDB</button></a>
                                 </div>
                             </div>
                         {% else %}

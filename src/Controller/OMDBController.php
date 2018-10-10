@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OMDBController extends AbstractController
 {
+
+
     /**
      * Redirect to multiple view if there are no GET parameters
      *
@@ -81,6 +83,51 @@ class OMDBController extends AbstractController
             'requestedTitle' => $requestedTitle
         ]);
     }
+
+    /**
+     * Display a specific movie by IMDB ID
+     *
+     * @Route("/find-specific-id/{imdbId}", name="find-specific-id")
+     * @param $imdbId
+     *
+     */
+    public function getMovieId($imdbId)
+    {
+        $omdbApiKey = getenv('OMDB_API_KEY');
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://www.omdbapi.com/?apikey=". $omdbApiKey . "&i=" . $imdbId);
+        curl_setopt($ch,  CURLOPT_RETURNTRANSFER, true);
+
+        $result_curl = curl_exec($ch);
+        $idResponse = json_decode($result_curl);
+
+
+        return $this->render('omdb/specific.html.twig',
+            [
+                'omdbApiKey' => $omdbApiKey,
+                'requestedId' => $imdbId,
+                'responseMovie' => $idResponse,
+                //'movies' => $json->Search
+            ]);
+
+    }
+
+    /**
+     * Find a movie by IMDB reference
+     *
+     * @Route("/myform-id/{imdbId} ", name="myform-id")
+     * @param Request $request
+     *
+     * @return Response
+     */
+    /* public function getMovieById(Request $request)
+    {
+
+    } */
+
+
+
 
 
 
