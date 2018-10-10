@@ -45,7 +45,7 @@ class OMDBController extends AbstractController
     /**
      * Multiple items search view without GET parameters
      *
-     * @Route("/multiple", name="multiple")
+     * @Route("/", name="multiple")
      */
     public function multiple()
     {
