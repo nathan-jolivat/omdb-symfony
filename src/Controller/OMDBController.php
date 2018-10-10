@@ -31,7 +31,7 @@ class OMDBController extends AbstractController
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
 
-        $makeTitleUrl = "http://www.omdbapi.com/?apikey=" . getenv('OMDB_API_KEY') . "&t=" . urlencode($title);
+        $makeTitleUrl = "http://www.omdbapi.com/?apikey=" . $omdbApiKey . "&t=" . urlencode($title);
         $queryTitle = file_get_contents($makeTitleUrl);
 
         $titleResponse = json_decode($queryTitle);
@@ -69,7 +69,7 @@ class OMDBController extends AbstractController
 
         $requestedTitle = $request->query->get('movieTitle');
 
-        $makeUrl = "http://www.omdbapi.com/?apikey=" . getenv('OMDB_API_KEY') . "&s=" . urlencode($requestedTitle);
+        $makeUrl = "http://www.omdbapi.com/?apikey=" . $omdbApiKey . "&s=" . urlencode($requestedTitle);
 
         $query = file_get_contents($makeUrl);
 
@@ -81,6 +81,8 @@ class OMDBController extends AbstractController
             'requestedTitle' => $requestedTitle
         ]);
     }
+
+
 
     /**
      * Gives OMDB API Key to Navbar view

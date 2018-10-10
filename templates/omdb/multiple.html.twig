@@ -8,15 +8,19 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <i class="mdi mdi-home"></i> Accueil - Recherche Multiple</li>
+                    <i class="mdi mdi-home"></i> Accueil - Recherche : </li>
             </ol>
         </nav>
+
+        <!-- Search Form by title keywords -->
         <form action="{{ path('find-multiple') }}" method="get">
             <div class="row">
                 <div class="col-md-9">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="mdi mdi-video-vintage"></i> &nbsp;Nom du film</span>
+                            <span class="input-group-text">
+                                <i class="mdi mdi-video-vintage"></i> &nbsp;Nom du film
+                            </span>
                         </div>
                         <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher" autofocus>
                     </div>
@@ -26,6 +30,15 @@
                 </div>
             </div>
         </form>
+
+        <!-- Search form for IMDB ID -->
+        <form action="" method="get">
+            <input type="text" class="form-control" name="movieImdbID" placeholder="Saisir la référence IMDB du film" >
+            <button><i class="mdi mdi-dog"></i> Va chercher !</button>
+
+
+        </form>
+
         {% if requestedTitle is defined %}
             <h4><i class="mdi mdi-arrow-right"></i> Résultat(s) pour : "{{ requestedTitle }}"</h4>
         {% endif %}
@@ -60,4 +73,5 @@
                 {% endfor %}
         {% endif %}
     </div>
+
 {% endblock %}

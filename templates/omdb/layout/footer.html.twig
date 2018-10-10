@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
+    <a class="navbar-brand" href="{{ url('multiple') }}"><i class="mdi mdi-home"></i> Retour à l'accueil</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('specific') }}">Specific</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('find-specific',{'title': 'test'}) }}">Test</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="mdi mdi-email-outline"></i> Contact</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/nathan-jolivat" >
+                    <i class="mdi mdi-pirate"></i> By Nathan Jolivat
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

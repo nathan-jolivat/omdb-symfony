@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }} " />
 
         {% include('omdb/assets/stylesheets.html.twig') %}
     </head>
@@ -9,6 +10,10 @@
         {% block content %}
 
         {% endblock %}
+
+        <footer>
+            {% include('omdb/layout/footer.html.twig') %}
+        </footer>
 
         {% include('omdb/assets/javascripts.html.twig') %}
     </body>
