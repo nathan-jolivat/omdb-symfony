@@ -11,7 +11,7 @@
         <div class="jumbotron">
             <div class="row">
                 <div class="col-md-4">
-                    {% if movieDetails.Poster is defined %}
+                    {% if movieDetails.Poster is defined and movieDetails.Poster != "" %}
                         <img class="card-img-top img-box-shadow" src="{{ movieDetails.Poster }}" alt="Poster du film">
                     {% else %}
                         <h5>Pas d'image disponible</h5>
