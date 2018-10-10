@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProductController extends AbstractController
+class OMDBController extends AbstractController
 {
     /**
      * Redirect to multiple view if there are no GET parameters
