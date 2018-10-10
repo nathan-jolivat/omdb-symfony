@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OMDBController extends AbstractController
@@ -24,7 +25,7 @@ class OMDBController extends AbstractController
      * @Route("/find-specific/{title}", name="find-specific")
      * @param $title
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getMovieTitle($title)
     {
@@ -60,7 +61,7 @@ class OMDBController extends AbstractController
      * @Route("/find-multiple", name="find-multiple")
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getMovieTitleMultiple(Request $request)
     {
@@ -84,7 +85,7 @@ class OMDBController extends AbstractController
     /**
      * Gives OMDB API Key to Navbar view
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function givesApiKeyToView()
     {
