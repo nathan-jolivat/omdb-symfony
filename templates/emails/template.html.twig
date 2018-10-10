@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Partage d'un film</title>
+
+        {{ include('omdb/assets/stylesheets.html.twig') }}
+    </head>
+    <body>
+        <h4>Héhé {{ name }} !</h4>
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-4">
+                    {% if movieDetails.Poster is defined %}
+                        <img class="card-img-top img-box-shadow" src="{{ movieDetails.Poster }}" alt="Poster du film">
+                    {% else %}
+                        <h5>Pas d'image disponible</h5>
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <h1 class="display-4">{{ movieDetails.Title }} - <span style="font-size: 40px"><i>{{ movieDetails.Year }}</i></span></h1>
+                    <span><i class="mdi mdi-calendar-clock"></i> Date de sortie <i class="mdi mdi-arrow-right"></i> {{ movieDetails.Released }}</span>
+                    <p class="lead">Avec <i>{{ movieDetails.Actors }}</i></p>
+                    <hr class="my-4">
+                    <h4><i class="mdi mdi-text-subject"></i> Synopsis</h4>
+                    <p>
+                        <i>{{ movieDetails.Plot }}</i>
+
+                        {% if movieDetails.Website is defined %}
+                            <br><br><a href="{{ movieDetails.Website }}">
+                            {{ movieDetails.Website }}
+                        </a>
+                        {% endif %}
+                    </p>
+                    <p class="lead">
+                        <span class="badge badge-primary"><i class="mdi mdi-tag-multiple"></i> {{ movieDetails.Genre }}</span>
+                    </p>
+                    <button type="button" class="btn btn-outline-secondary margin-top-30px" data-toggle="modal" data-target="#shareModal">
+                        <i class="mdi mdi-email"></i> Partager
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+    {{ include('omdb/assets/javascripts.html.twig') }}
+</html>

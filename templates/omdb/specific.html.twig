@@ -1,6 +1,6 @@
 {% extends 'omdb/layout/base.html.twig' %}
 
-{% block title %}OMDB API Training{% endblock %}
+{% block title %}Fiche film - {{ responseMovie.Title is defined ? responseMovie.Title : "" }}{% endblock %}
 
 {% block content %}
     {% include('omdb/layout/navbar.html.twig') %}
@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <i class="mdi mdi-home"></i> Accueil > Fiche film > <b>{{ responseMovie.Title is defined ?: "" }}</b></li>
+                    <i class="mdi mdi-home"></i> Accueil > Fiche film > <b>{{ responseMovie.Title is defined ? responseMovie.Title : "" }}</b></li>
             </ol>
         </nav>
             {% if responseMovie is defined %}
@@ -40,6 +40,9 @@
                             <p class="lead">
                                 <span class="badge badge-primary"><i class="mdi mdi-tag-multiple"></i> {{ responseMovie.Genre }}</span>
                             </p>
+                            <button type="button" class="btn btn-outline-secondary margin-top-30px" data-toggle="modal" data-target="#shareModal">
+                                <i class="mdi mdi-email"></i> Partager
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -54,4 +57,5 @@
             {% endif %}
 
     </div>
+    {{ include('modals/share-movie.html.twig') }}
 {% endblock %}

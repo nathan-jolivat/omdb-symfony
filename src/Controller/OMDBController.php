@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Controller\MailController;
+use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,10 +78,54 @@ class OMDBController extends AbstractController
         $response = json_decode($query);
 
         return $this->render('omdb/multiple.html.twig', [
-            'responseMovie' => $response,
-            'omdbApiKey'    => $omdbApiKey,
+            'responseMovie'  => $response,
+            'omdbApiKey'     => $omdbApiKey,
             'requestedTitle' => $requestedTitle
         ]);
+    }
+
+    /**
+     * Send movie informations to a recipient by mail
+     *
+     * @Route("/prepare-to-send-mail", name="prepare-to-send-mail")
+     *
+     * @param Request      $request
+     *
+     * @param Swift_Mailer $mailer
+     *
+     * @return Response
+     */
+    public function shareMovie(Request $request, Swift_Mailer $mailer)
+    {
+        $recipient = $request->request->get('emailRecipient');
+
+        $movieDetails = [
+            'Title'    => $request->request->get('movieTitle'),
+            'Poster'   => $request->request->get('moviePoster'),
+            'Year'     => $request->request->get('movieYear'),
+            'Released' => $request->request->get('movieReleased'),
+            'Actors'   => $request->request->get('movieActors'),
+            'Plot'     => $request->request->get('moviePlot'),
+            'Website'  => $request->request->get('movieWebsite'),
+            'Genre'    => $request->request->get('movieGenre')
+        ];
+
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo('recipient@example.com')
+            ->setBody($this->renderView(
+                'emails/template.html.twig',
+                [
+                    'name'         => $recipient,
+                    'movieDetails' => $movieDetails
+                ]
+            ),
+            'text/html'
+        );
+
+        $mailer->send($message);
+
+        return $this->render("emails/mail-sended.html.twig");
     }
 
     /**
@@ -87,7 +133,7 @@ class OMDBController extends AbstractController
      *
      * @return Response
      */
-    public function givesApiKeyToView()
+    private function givesApiKeyToView()
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
 
