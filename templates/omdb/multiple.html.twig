@@ -28,6 +28,48 @@
         </form>
         {% if requestedTitle is defined %}
             <h4><i class="mdi mdi-arrow-right"></i> Résultat(s) pour : "{{ requestedTitle }}"</h4>
+        {% else %}
+            <style>
+                body{
+                    background:#4492f4 !important;
+                }
+            </style>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-lg-8 margin-top-huge">
+                    <div class="loading">
+                        <div class="finger finger-1">
+                            <div class="finger-item">
+                                <span></span><i></i>
+                            </div>
+                        </div>
+                        <div class="finger finger-2">
+                            <div class="finger-item">
+                                <span></span><i></i>
+                            </div>
+                        </div>
+                        <div class="finger finger-3">
+                            <div class="finger-item">
+                                <span></span><i></i>
+                            </div>
+                        </div>
+                        <div class="finger finger-4">
+                            <div class="finger-item">
+                                <span></span><i></i>
+                            </div>
+                        </div>
+                        <div class="last-finger">
+                            <div class="last-finger-item"><i></i></div>
+                        </div>
+                    </div>
+                    <h5 class="loader-title">En attente d'un film à rechercher...</h5>
+                </div>
+                {#<div class="col-md-4">#}
+                    {#<img src="{{ asset('assets/img/crystal-rotating-spinner.gif') }}" class="loader-img"><br>#}
+                    {#<h5 style="text-align: center;">En attente d'un film à rechercher...</h5>#}
+                {#</div>#}
+                <div class="col-md-2"></div>
+            </div>
         {% endif %}
             {% if responseMovie is defined %}
                 {% for searchItem in responseMovie.Search %}
