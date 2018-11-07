@@ -27,7 +27,9 @@
             </div>
         </form>
         {% if requestedTitle is defined %}
-            <h4><i class="mdi mdi-arrow-right"></i> Résultat(s) pour : "{{ requestedTitle }}"</h4>
+            {% if responseMovie.Response != "False" %}
+                <h4><i class="mdi mdi-arrow-right"></i> Résultat(s) pour : "{{ requestedTitle }}"</h4>
+            {% endif %}
         {% else %}
             <style>
                 body{
@@ -71,12 +73,16 @@
                 <div class="col-md-2"></div>
             </div>
         {% endif %}
-            {% if responseMovie is defined %}
+        {% if responseMovie is defined %}
+            {% if responseMovie.Response == "False" %}
+                <h1><i class="mdi mdi-arrow-right"></i> Aucun Résultat pour : "{{ requestedTitle }}"</h1>
+                {% include 'omdb/not-found-movie.part.html.twig' %}
+            {% else %}
                 {% for searchItem in responseMovie.Search %}
                     {% if searchItem is defined %}
                         {% if searchItem.Title is defined %}
                             <div class="card d-inline-block" style="width: 18rem;">
-                                <img class="card-img-top" src="{{ searchItem.Poster }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{ searchItem.Poster != "N/A" ? searchItem.Poster : asset('assets/img/default_image.png') }}" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ searchItem.Title }}</h5>
                                     <p><i class="mdi mdi-calendar-clock"></i> Date de sortie <i>{{ searchItem.Year }}</i></p>
@@ -100,6 +106,7 @@
                         {% endif %}
                     {% endif %}
                 {% endfor %}
+        {% endif %}
         {% endif %}
     </div>
 {% endblock %}
