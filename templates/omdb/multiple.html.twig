@@ -4,8 +4,8 @@
 
 {% block content %}
     {% include('omdb/layout/navbar.html.twig') %}
-    <div class="container" style="margin-top: 30px">
-        <nav aria-label="breadcrumb">
+    <div class="container" >
+        <nav aria-label="breadcrumb" class="primary mt-4">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
                     <i class="mdi mdi-home"></i> Accueil - Recherche : </li>
@@ -15,28 +15,36 @@
         <!-- Search Form by title keywords -->
         <form action="{{ path('find-multiple') }}" method="get">
 
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="mdi mdi-video-vintage"></i> &nbsp;Nom du film
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher" autofocus>
-                        <div class="input-group-append" id="button-addon4">
-                            <button class="btn btn-primary" type="submit"><i class="mdi mdi-target"></i> Récupérer informations</button>
-                        </div>
-                    </div>
-        </form>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="mdi mdi-video-vintage"></i> &nbsp;Nom du film
+                    </span>
+                </div>
+
+                <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher" autofocus>
+
+                <div class="input-group-append" id="button-addon4">
+                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-target"></i> Récupérer informations</button>
+                </div>
+            </div>
+
+        </form><!-- End form Search for Title keywords -->
 
         <!-- Search form for IMDB ID -->
         <form action="{{ path('myform-id') }}" method="get">
+
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="mdi mdi-database-search"></i> Réf. IMDB </span>
+                    <span class="input-group-text">
+                        <i class="mdi mdi-database-search"></i>&nbsp;Réf. IMDB
+                    </span>
                 </div>
+
                 <input type="text" class="form-control" name="movieImdbID" placeholder="Saisir la référence IMDB du film" >
-                <div class="input-group-append" id="button-addon4">
-                    <button class="btn btn-warning" type="submit" ><i class="mdi mdi-dog"></i> Va chercher !</button>
+
+                <div class="input-group-append" >
+                    <button class="btn btn-outline-primary" type="submit" ><i class="mdi mdi-dog"></i> Va chercher !</button>
                 </div>
             </div>
         </form>
@@ -54,10 +62,12 @@
                                     <h5 class="card-title">{{ searchItem.Title }}</h5>
                                     <p><i class="mdi mdi-calendar-clock"></i> Date de sortie <i>{{ searchItem.Year }}</i></p>
                                     <p>
-                                        {% if searchItem.Type == "game" %}
-                                            <span class="badge badge-pill badge-primary"><i class="mdi mdi-gamepad-variant"></i> Jeu vidéo</span>
+                                        {% if searchItem.Type == "series" %}
+                                            <span class="badge badge-pill badge-danger"><i class="mdi mdi-popcorn"></i> Série TV</span>
                                         {% elseif searchItem.Type == "movie" %}
-                                            <span class="badge badge-pill badge-success"><i class="mdi mdi-video-vintage"></i> Film</span>
+                                            <span class="badge badge-pill badge-primary"><i class="mdi mdi-video-vintage"></i> Film</span>
+                                        {% elseif searchItem.Type == "episode" %}
+                                            <span class="badge badge-pill badge-success"><i class="mdi mdi-movie"></i> Film</span>
                                         {% endif %}
                                     </p>
                                     <a href="{{ path('find-specific', { 'title' : searchItem.Title }) }}">

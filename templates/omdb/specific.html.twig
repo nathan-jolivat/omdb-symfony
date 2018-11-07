@@ -25,7 +25,7 @@
                         <div class="col-md-8">
                             <h1 class="display-4">{{ responseMovie.Title }} - <span style="font-size: 40px"><i>{{ responseMovie.Year }}</i></span></h1>
                             <span><i class="mdi mdi-movie"></i> Réalisé par {{ responseMovie.Director }}</span>
-                            <span class="badge badge-light"><i class="mdi mdi-calendar-clock"></i> {{ responseMovie.Released }}</span>
+                            <span class="badge badge-dark"><i class="mdi mdi-calendar-clock"></i> {{ responseMovie.Released }}</span>
                             <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
                             <hr class="my-4">
                             <h4><i class="mdi mdi-text-subject"></i> Synopsis</h4>
@@ -46,16 +46,13 @@
                                     {% for note in responseMovie.Ratings %}
                                     <li class="list-group-item">
                                         {{ note.Source }} : {{ note.Value }}<i class="mdi mdi-star-half"></i>
-                                        <!-- <div class="progress mt-1" style="height: 0.8rem;">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>-->
                                     </li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
 
                             <p class="lead">
-                                <span class="badge badge-primary"><i class="mdi mdi-tag-multiple"></i> {{ responseMovie.Genre }}</span>
+                                <span class="badge badge-warning"><i class="mdi mdi-tag-multiple"></i> {{ responseMovie.Genre }}</span>
                             </p>
                         </div>
                     </div>

@@ -40,7 +40,7 @@ class OMDBController extends AbstractController
 
         return $this->render('omdb/specific.html.twig', [
             'responseMovie' => $titleResponse,
-            'omdbApiKey'    => $omdbApiKey,
+            'omdbApiKey' => $omdbApiKey,
             'titleResponse' => $titleResponse !== null ? $titleResponse : null
         ]);
     }
@@ -68,7 +68,6 @@ class OMDBController extends AbstractController
     public function getMovieTitleMultiple(Request $request)
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
-
         $requestedTitle = $request->query->get('movieTitle');
 
         $makeUrl = "http://www.omdbapi.com/?apikey=" . $omdbApiKey . "&s=" . urlencode($requestedTitle);
@@ -79,7 +78,7 @@ class OMDBController extends AbstractController
 
         return $this->render('omdb/multiple.html.twig', [
             'responseMovie' => $response,
-            'omdbApiKey'    => $omdbApiKey,
+            'omdbApiKey' => $omdbApiKey,
             'requestedTitle' => $requestedTitle
         ]);
     }
@@ -96,8 +95,8 @@ class OMDBController extends AbstractController
         $omdbApiKey = getenv('OMDB_API_KEY');
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://www.omdbapi.com/?apikey=". $omdbApiKey . "&i=" . $imdbId);
-        curl_setopt($ch,  CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, "http://www.omdbapi.com/?apikey=" . $omdbApiKey . "&i=" . $imdbId);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $result_curl = curl_exec($ch);
         $idResponse = json_decode($result_curl);
@@ -120,7 +119,8 @@ class OMDBController extends AbstractController
      *
      * @return Response
      */
-     public function getMovieById(Request $request)
+    public function getMovieById(Request $request)
+    // On fait appel à l'objet Request appelé en haut dans les use
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
         $requestedId = $request->query->get('movieImdbID');
@@ -131,14 +131,11 @@ class OMDBController extends AbstractController
 
 
         return $this->render('omdb/specific.html.twig', [
-            'omdbApiKey'    => $omdbApiKey,
-            //'requestedId' => $imdbId,
+            'omdbApiKey' => $omdbApiKey,
             'responseMovie' => $idResponse,
         ]);
 
     }
-
-
 
 
     /**
@@ -152,12 +149,17 @@ class OMDBController extends AbstractController
 
         return $this->render('omdb/layout/navbar.html.twig', ['omdbApiKey' => $omdbApiKey]);
     }
+
+
+    /**
+     * Go to the Contact page
+     *
+     * * @Route("/contact", name="contact")
+     *
+     */
+    public function contactPage()
+    {
+        return $this->render('omdb/contact.html.twig');
+    }
+
 }
-
-
-/**
- * Go to the Contact page
- *
- *
- */
-
