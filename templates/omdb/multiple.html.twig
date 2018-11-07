@@ -1,6 +1,6 @@
 {% extends 'omdb/layout/base.html.twig' %}
 
-{% block title %}OMDB API Training{% endblock %}
+{% block title %}OMDB API - Chercher un film{% endblock %}
 
 {% block content %}
     {% include('omdb/layout/navbar.html.twig') %}
@@ -29,7 +29,7 @@
         </form>
 
         <!-- Search form for IMDB ID -->
-        <form action="{" method="post">
+        <form action="{{ path('myform-id') }}" method="get">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="mdi mdi-database-search"></i> Réf. IMDB </span>
@@ -49,7 +49,7 @@
                     {% if searchItem is defined %}
                         {% if searchItem.Title is defined %}
                             <div class="card d-inline-block" style="width: 18rem;">
-                                <img class="card-img-top" src="{{ searchItem.Poster }}" alt="Card image cap">
+                                <img class="card-img-top" src="{{ searchItem.Poster }}" alt="Affiche du film">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ searchItem.Title }}</h5>
                                     <p><i class="mdi mdi-calendar-clock"></i> Date de sortie <i>{{ searchItem.Year }}</i></p>

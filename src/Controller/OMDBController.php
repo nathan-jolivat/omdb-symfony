@@ -108,7 +108,6 @@ class OMDBController extends AbstractController
                 'omdbApiKey' => $omdbApiKey,
                 'requestedId' => $imdbId,
                 'responseMovie' => $idResponse,
-                //'movies' => $json->Search
             ]);
 
     }
@@ -116,17 +115,28 @@ class OMDBController extends AbstractController
     /**
      * Find a movie by IMDB reference
      *
-     * @Route("/myform-id/{imdbId} ", name="myform-id")
+     * @Route("/myform-id/", name="myform-id")
      * @param Request $request
      *
      * @return Response
      */
-    /* public function getMovieById(Request $request)
+     public function getMovieById(Request $request)
     {
+        $omdbApiKey = getenv('OMDB_API_KEY');
+        $requestedId = $request->query->get('movieImdbID');
 
-    } */
+        $makeUrl = "http://www.omdbapi.com/?apikey=" . $omdbApiKey . "&i=" . urlencode($requestedId);
+        $query = file_get_contents($makeUrl);
+        $idResponse = json_decode($query);
 
 
+        return $this->render('omdb/specific.html.twig', [
+            'omdbApiKey'    => $omdbApiKey,
+            //'requestedId' => $imdbId,
+            'responseMovie' => $idResponse,
+        ]);
+
+    }
 
 
 
@@ -143,3 +153,11 @@ class OMDBController extends AbstractController
         return $this->render('omdb/layout/navbar.html.twig', ['omdbApiKey' => $omdbApiKey]);
     }
 }
+
+
+/**
+ * Go to the Contact page
+ *
+ *
+ */
+

@@ -1,6 +1,6 @@
 {% extends 'omdb/layout/base.html.twig' %}
 
-{% block title %}OMDB API Training{% endblock %}
+{% block title %}OMDB API - fiche film{% endblock %}
 
 {% block content %}
     {% include('omdb/layout/navbar.html.twig') %}
@@ -41,7 +41,7 @@
 
                             {% if responseMovie.Ratings is defined %}
                                 <hr class="my-2">
-                                <h4><i class="mdi mdi-star-face"></i> Note des critiques</h4>
+                                <h4><i class="mdi mdi-star-face"></i> Note des critiques :</h4>
                                 <ul class="list-group list-group-flush mb-3">
                                     {% for note in responseMovie.Ratings %}
                                     <li class="list-group-item">
