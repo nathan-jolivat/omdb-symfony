@@ -76,11 +76,21 @@ class OMDBController extends AbstractController
 
         $response = json_decode($query);
 
-        return $this->render('omdb/multiple.html.twig', [
-            'responseMovie' => $response,
-            'omdbApiKey' => $omdbApiKey,
-            'requestedTitle' => $requestedTitle
-        ]);
+        if ( isset( $response->Search ))
+        {
+            //Rendu de la liste des films
+            return $this->render('omdb/multiple.html.twig', [
+                'responseMovie' => $response,
+                'omdbApiKey' => $omdbApiKey,
+                // Paramètre attendu par la route :
+                'requestedTitle' => $requestedTitle
+            ]);
+        }else{
+            return $this->render('omdb/not_found.html.twig', [
+                'requestedTitle' => $requestedTitle,
+                'omdbApiKey' => $omdbApiKey,
+            ]);
+        }
     }
 
     /**

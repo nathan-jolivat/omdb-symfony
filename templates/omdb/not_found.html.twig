@@ -1,0 +1,23 @@
+{% extends 'omdb/layout/base.html.twig' %}
+
+{% block title %}OMDB API - Chercher un film{% endblock %}
+
+{% block content %}
+    {% include('omdb/layout/navbar.html.twig') %}
+<div class="container mt-4" >
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <i class="mdi mdi-home"></i> Accueil - Recherche : </li>
+        </ol>
+    </nav>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <i class="mdi mdi-cloud-alert"></i><strong> Ah, désolé.</strong> <i class="mdi mdi-arrow-right"></i> Nous n'avons trouvé aucun film au nom de "{{ requestedTitle }}".
+    </div>
+</div>
+
+{% endblock %}
