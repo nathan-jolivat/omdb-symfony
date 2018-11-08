@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Un film à découvrir</title>
+    <style type="text/css">
+        body {margin: 0; padding: 0; min-width: 100%!important; background: #ffff00;}
+        .content {width: 100%; max-width: 600px;}
+    </style>
+</head>
+
+<body>
+{% block content %}
+    <table class="content">
+        <tr>
+            <td>
+                <p style="text-align: center">Hey, salut. J'ai ce super film à te recommander, jettes-y un coup d'oeil et dis moi ce que tu en penses. Bisous.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h1>{{ movie.Title }}</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="{{ movie.Poster }}" alt="Poster du film">
+            </td>
+        </tr>
+        <tr>
+            <td><h2>Informations sur le film</h2></td>
+        </tr>
+        <tr>
+            <td>Réalisé par : </td>
+            <td>{{ movie.Director }}</td>
+        </tr>
+        <tr>
+            <td>Film sorti en : </td>
+            <td>{{ movie.Year }}</td>
+        </tr>
+        <tr>
+            <td>Résumé : </td>
+            <td>{{ movie.Plot }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
+</body>
+</html>

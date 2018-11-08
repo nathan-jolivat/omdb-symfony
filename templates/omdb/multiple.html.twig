@@ -24,7 +24,7 @@
 
                 <input type="text" class="form-control" name="movieTitle" placeholder="Saisir nom du film à rechercher" autofocus>
 
-                <div class="input-group-append" id="button-addon4">
+                <div class="input-group-append" >
                     <button class="btn btn-primary" type="submit"><i class="mdi mdi-target"></i> Récupérer informations</button>
                 </div>
             </div>
@@ -49,15 +49,24 @@
             </div>
         </form>
 
-        {% if requestedTitle is defined %}
+        {% if filmFound is defined %}
+        {% if filmFound == false %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="mdi mdi-cloud-alert"></i><strong> Une erreur est survenue</strong> <i class="mdi mdi-arrow-right"></i> Aucun film de ce nom là n'existe m'sieur.
+            </div>
+
+        {% else %}
             <h4><i class="mdi mdi-arrow-right"></i> Résultat(s) pour : "{{ requestedTitle }}"</h4>
-        {% endif %}
             {% if responseMovie is defined %}
                 {% for searchItem in responseMovie.Search %}
                     {% if searchItem is defined %}
                         {% if searchItem.Title is defined %}
-                            <div class="card d-inline-block" style="width: 18rem;">
-                                <img class="card-img-top" src="{{ searchItem.Poster }}" alt="Affiche du film">
+
+                            <div class="card m-1 d-inline-block align-top" >
+                                <img class="card-img-top"  src="{{ searchItem.Poster }}" alt="Affiche du film">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ searchItem.Title }}</h5>
                                     <p><i class="mdi mdi-calendar-clock"></i> Date de sortie <i>{{ searchItem.Year }}</i></p>
@@ -77,16 +86,12 @@
                                         <button class="btn btn-light">Ref. IMDB</button></a>
                                 </div>
                             </div>
-                        {% else %}
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <i class="mdi mdi-cloud-alert"></i><strong> Une erreur est survenue</strong> <i class="mdi mdi-arrow-right"></i> Aucun film de ce nom là n'existe m'sieur.
-                            </div>
+
                         {% endif %}
                     {% endif %}
                 {% endfor %}
+            {% endif %}
+        {% endif %}
         {% endif %}
     </div>
 

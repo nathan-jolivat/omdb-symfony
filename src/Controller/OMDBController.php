@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class OMDBController extends AbstractController
 {
 
@@ -54,7 +55,9 @@ class OMDBController extends AbstractController
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
 
-        return $this->render('omdb/multiple.html.twig', ['omdbApiKey' => $omdbApiKey]);
+        return $this->render('omdb/multiple.html.twig', [
+            'omdbApiKey' => $omdbApiKey
+        ]);
     }
 
     /**
@@ -82,13 +85,15 @@ class OMDBController extends AbstractController
             return $this->render('omdb/multiple.html.twig', [
                 'responseMovie' => $response,
                 'omdbApiKey' => $omdbApiKey,
+                'filmFound' => true,
                 // Paramètre attendu par la route :
                 'requestedTitle' => $requestedTitle
             ]);
         }else{
-            return $this->render('omdb/not_found.html.twig', [
+            return $this->render('omdb/multiple.html.twig', [
                 'requestedTitle' => $requestedTitle,
                 'omdbApiKey' => $omdbApiKey,
+                'filmFound' => false
             ]);
         }
     }
@@ -130,7 +135,7 @@ class OMDBController extends AbstractController
      * @return Response
      */
     public function getMovieById(Request $request)
-    // On fait appel à l'objet Request appelé en haut dans les use
+    // On fait appel à l'objet Request appelé en haut dans les use machin
     {
         $omdbApiKey = getenv('OMDB_API_KEY');
         $requestedId = $request->query->get('movieImdbID');
@@ -170,6 +175,68 @@ class OMDBController extends AbstractController
     public function contactPage()
     {
         return $this->render('omdb/contact.html.twig');
+    }
+
+    /**
+     * Send film details by email
+     *
+     * @Route("/share", name="share")
+     */
+    public function sendByMail( Request $request, \Swift_Mailer $mailer )
+    {
+        // dump($request->request->all() );
+        $imdbId = $request->request->get('movieId');
+        $mailRecipient = $request->request->get('mailAdress');
+
+        $omdbApiKey = getenv('OMDB_API_KEY');
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://www.omdbapi.com/?apikey=" . $omdbApiKey . "&i=" . $imdbId);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result_curl = curl_exec($ch);
+        $idResponse = json_decode($result_curl);
+
+        // On teste que les données récupérées sont bien un film
+        if ( isset( $idResponse->Response ) && ($idResponse->Response == "True"))
+        {
+            // On stocke notre sortie dans une variable
+            $output = $this->render('mails/fichefilm.html.twig',
+                [
+                    'movie' => $idResponse
+                ]);
+
+            // On prépare notre message avec un objet SwiftMailer
+            $mail = (new \Swift_Message('Hey gros, mate donc ce film !'))
+                ->setFrom(['lalicornemagique@youpi.com' => 'Dieu'])
+                ->setTo($mailRecipient)
+                ->setBody(
+                    $output,
+                    'text/html'
+                );
+
+            // Appel du facteur et envoi du mail
+            $mailer->send( $mail );
+
+            // Message de confirmation qui flashouille
+            $this->addFlash(
+                'success',
+                'Message bien envoyé, gros. ;)'
+            );
+
+            // Redirection vers la fiche détaillée
+            return $this->redirectToRoute('find-specific-id', [
+                'imdbId' => $imdbId
+            ]);
+
+        }else {
+
+            return $this->render('omdb/not_found.html.twig', [
+                'requestedTitle' => $idResponse->Title,
+                'omdbApiKey' => $omdbApiKey,
+            ]);
+        }
+
     }
 
 }

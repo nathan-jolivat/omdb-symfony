@@ -11,24 +11,39 @@
                     <i class="mdi mdi-home"></i> Accueil > Fiche film > <b>{{ responseMovie.Title is defined ?: "" }}</b></li>
             </ol>
         </nav>
-            {% if responseMovie is defined %}
-            {% if responseMovie.Title is defined %}
-                <div class="jumbotron">
-                    <div class="row">
-                        <div class="col-md-4">
-                            {% if responseMovie.Poster is defined %}
-                                <img class="card-img-top img-box-shadow" src="{{ responseMovie.Poster }}" alt="Poster du film">
+
+    {% if responseMovie is defined %}
+        {% if responseMovie.Title is defined %}
+            <div class="jumbotron">
+
+                {# Pour afficher la confirmation que le mail a bien été envoyé #}
+                {% for message in app.flashes('success') %}
+                    <div class="flash-notice alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <i class="mdi mdi-email-check-outline"></i> {{ message }}
+                    </div>
+                {% endfor %}
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        {% if responseMovie.Poster is defined %}
+                            <img class="card-img-top img-box-shadow" src="{{ responseMovie.Poster }}" alt="Poster du film">
                             {% else %}
                                 <h5>Pas d'image disponible</h5>
                             {% endif %}
-                        </div>
-                        <div class="col-md-8">
-                            <h1 class="display-4">{{ responseMovie.Title }} - <span style="font-size: 40px"><i>{{ responseMovie.Year }}</i></span></h1>
-                            <span><i class="mdi mdi-movie"></i> Réalisé par {{ responseMovie.Director }}</span>
-                            <span class="badge badge-dark"><i class="mdi mdi-calendar-clock"></i> {{ responseMovie.Released }}</span>
-                            <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
-                            <hr class="my-4">
-                            <h4><i class="mdi mdi-text-subject"></i> Synopsis</h4>
+                    </div>
+
+                    <div class="col-md-8">
+                        <h1 class="display-4">{{ responseMovie.Title }} - <span style="font-size: 40px"><i>{{ responseMovie.Year }}</i></span></h1>
+                        <span><i class="mdi mdi-movie"></i> Réalisé par {{ responseMovie.Director }}</span>
+                        <span class="badge badge-dark"><i class="mdi mdi-calendar-clock"></i> {{ responseMovie.Released }}</span>
+                        <p class="lead">Avec <i>{{ responseMovie.Actors }}</i></p>
+                        <hr class="my-4">
+
+                        <h4><i class="mdi mdi-text-subject"></i> Synopsis</h4>
                             <p>
                                 <i>{{ responseMovie.Plot }}</i>
 
@@ -39,24 +54,46 @@
                                 {% endif %}
                             </p>
 
-                            {% if responseMovie.Ratings is defined %}
-                                <hr class="my-2">
-                                <h4><i class="mdi mdi-star-face"></i> Note des critiques :</h4>
-                                <ul class="list-group list-group-flush mb-3">
-                                    {% for note in responseMovie.Ratings %}
+                        {% if responseMovie.Ratings is defined %}
+                            <hr class="my-2">
+                            <h4><i class="mdi mdi-star-face"></i> Note des critiques :</h4>
+                            <ul class="list-group list-group-flush mb-3">
+                                {% for note in responseMovie.Ratings %}
                                     <li class="list-group-item">
                                         {{ note.Source }} : {{ note.Value }}<i class="mdi mdi-star-half"></i>
                                     </li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
 
-                            <p class="lead">
-                                <span class="badge badge-warning"><i class="mdi mdi-tag-multiple"></i> {{ responseMovie.Genre }}</span>
-                            </p>
-                        </div>
+                        <p class="lead">
+                            <span class="badge badge-warning"><i class="mdi mdi-tag-multiple"></i> {{ responseMovie.Genre }}</span>
+                        </p>
+
+                        <hr class="my-4">
+
+                        <form action="{{ url('share') }}" method="post" >
+
+                            <button class="btn btn-warning" type="submit" id="share"><i class="mdi mdi-share-variant"></i></button>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" >@</span>
+                                </div>
+                                <input type="email" class="form-control" name="mailAdress" placeholder="Saisissez votre adresse e-mail" aria-label="Email" aria-describedby="adresse e-mail">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2">Envoyer</button>
+                                </div>
+                            </div>
+                            <input type="hidden"  name="movieId" value="{{ responseMovie.imdbID }}" >
+
+                        </form>
+
+
                     </div>
                 </div>
+            </div>
+
             {% else %}
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
