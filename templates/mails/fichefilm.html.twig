@@ -4,46 +4,68 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Un film à découvrir</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+
     <style type="text/css">
-        body {margin: 0; padding: 0; min-width: 100%!important; background: #ffff00;}
-        .content {width: 100%; max-width: 600px;}
+        body {
+            margin: 0; padding: 0; min-width: 100%!important;
+            background-image: linear-gradient(to bottom, #dfe9f3 0%, white 100%);
+            font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+            text-align: center;
+        }
+        .content {
+            width: 100%; max-width: 600px;
+            margin: auto; padding: 2rem;
+            background: #fff;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Arvo', Georgia, Times, serif;
+        }
+        h1 {
+            font-size: 59px;
+            line-height: 70px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 25px;
+        }
+        table td h3 { text-align: right; margin: 0px;}
+        table td { text-align: left; }
+        table, td, th {
+            border-collapse: collapse; padding: 10px; }
+
     </style>
 </head>
 
 <body>
 {% block content %}
-    <table class="content">
-        <tr>
-            <td>
-                <p style="text-align: center">Hey, salut. J'ai ce super film à te recommander, jettes-y un coup d'oeil et dis moi ce que tu en penses. Bisous.</p>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <h1>{{ movie.Title }}</h1>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="{{ movie.Poster }}" alt="Poster du film">
-            </td>
-        </tr>
-        <tr>
-            <td><h2>Informations sur le film</h2></td>
-        </tr>
-        <tr>
-            <td>Réalisé par : </td>
-            <td>{{ movie.Director }}</td>
-        </tr>
-        <tr>
-            <td>Film sorti en : </td>
-            <td>{{ movie.Year }}</td>
-        </tr>
-        <tr>
-            <td>Résumé : </td>
-            <td>{{ movie.Plot }}</td>
-        </tr>
-    </table>
+    <section class="content" >
+        <p>Hey, salut. J'ai ce super film à te recommander, jettes-y un coup d'oeil et dis moi ce que tu en penses. Bisous.</p>
+        <hr>
+        <h1>{{ movie.Title }}</h1>
+        <img src="{{ movie.Poster }}" alt="Poster du film" style="box-shadow: 0 10px 25px -10px rgba(0,0,0,0.75); margin-bottom: 25px;">
+
+        <table>
+            <tr>
+                <th colspan="2"><h2>- Informations sur le film -</h2></th>
+            </tr>
+            <tr>
+                <td style="width: 35%;"> <h3>Réalisé par : </h3> </td>
+                <td>{{ movie.Director }}</td>
+            </tr>
+            <tr>
+                <td><h3>Film sorti en : </h3></td>
+                <td>{{ movie.Year }}</td>
+            </tr>
+            <tr>
+                <td><h3>Résumé : </h3></td>
+                <td>{{ movie.Plot }}</td>
+            </tr>
+        </table>
+    </section>
 
 {% endblock %}
 </body>

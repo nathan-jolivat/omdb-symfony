@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Vote;
 
 
 class OMDBController extends AbstractController
@@ -116,12 +117,18 @@ class OMDBController extends AbstractController
         $result_curl = curl_exec($ch);
         $idResponse = json_decode($result_curl);
 
+        // Récupération de la moyenne des notes
+        $moyenneNotes = $this->getDoctrine()
+            ->getRepository(Vote::class)
+            ->findAverageRating( $imdbId );
+
 
         return $this->render('omdb/specific.html.twig',
             [
                 'omdbApiKey' => $omdbApiKey,
                 'requestedId' => $imdbId,
                 'responseMovie' => $idResponse,
+                'avgRating' => $moyenneNotes
             ]);
 
     }
@@ -174,7 +181,10 @@ class OMDBController extends AbstractController
      */
     public function contactPage()
     {
-        return $this->render('omdb/contact.html.twig');
+        $omdbApiKey = getenv('OMDB_API_KEY');
+        return $this->render('omdb/contact.html.twig', [
+            'omdbApiKey' => $omdbApiKey,
+        ]);
     }
 
     /**
@@ -200,6 +210,13 @@ class OMDBController extends AbstractController
         // On teste que les données récupérées sont bien un film
         if ( isset( $idResponse->Response ) && ($idResponse->Response == "True"))
         {
+
+            /* // Affichage de la sortie pour DEV
+            return $this->render('mails/fichefilm.html.twig',
+            [
+                'movie' => $idResponse
+            ]);  */
+
             // On stocke notre sortie dans une variable
             $output = $this->render('mails/fichefilm.html.twig',
                 [
@@ -238,5 +255,75 @@ class OMDBController extends AbstractController
         }
 
     }
+
+    /**
+     * Send a note for a film méthodeGET
+     *
+     * @Route( "/nouveauvote/{imdbID}/{note}", name="nouveauvote" )
+     * @param $imdbID
+     * @param $note
+     *
+     * Cette route ne sert plus à rien on peut la jeter
+     */
+    public function sendNote($imdbID, $note) {
+
+        // On créée une nouvelle entité de classe Vote
+        $vote = new Vote();
+        // On lui donne les valeurs de notre Vote, la note et le film en question
+        $vote->setImdbID( $imdbID );
+        $vote->setNote( $note );
+
+        // On fait appel au gestionnaire d'entités inclus avec Doctrine
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // On demande au gestionnaire de PERSISTER les données en base
+        // La méthode persist génère les requêtes SQL d'insertion en base
+        $entityManager->persist( $vote );
+
+        // Avec la méthode flush, les requêtes générées partent en base d'un coup.
+        $entityManager->flush();
+
+        // Message de confirmation
+        $this->addFlash(
+            'success',
+            'Merci d\'avoir voté !'
+        );
+
+        return $this->redirectToRoute('find-specific-id', [
+            'imdbId' => $imdbID
+        ]);
+
+    }
+
+    /**
+     * Catch the note for the film POST route
+     *
+     * @Route( "/nouveauVotePOST", name="nouveauVotePOST" )
+     * @param Request $request
+     *
+     */
+    public function catchNote( Request $request )
+    {
+        $note = $request->request->get('note');
+        $imdbID = $request->request->get('movieId');
+
+        $vote = new Vote();
+        $vote->setImdbID( $imdbID );
+        $vote->setNote( $note );
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist( $vote );
+        $entityManager->flush();
+        $this->addFlash(
+            'success',
+            'Merci d\'avoir voté !'
+        );
+
+        return $this->redirectToRoute('find-specific-id', [
+            'imdbId' => $imdbID
+        ]);
+    }
+
+
 
 }
